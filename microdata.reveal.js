@@ -11,6 +11,33 @@
 
 // Presumption is that we have JQuery loaded.
 var $ = jQuery;
+
+/*
+$.getScript('microdata.reveal/lib/json2.js');
+$.getScript('microdata.reveal/lib/json-template.js');
+$.getScript('microdata.reveal/lib/messi/messi.min.js');
+$.getScript('microdata.reveal/lib/microdatajs/jquery.microdata.js');
+$.getScript('microdata.reveal/lib/microdatajs/jquery.microdata.json.js');
+*/
+
+var items = 0;
+
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    alert('client receiving');
+  if (request.property == "items.length"){
+    alert('client received');
+/*
+    chrome.extension.sendMessage({property: 'items.length', items_length: items.length}, function(response) {
+        alert('client sending');
+    });
+*/
+  }
+  else{
+    sendResponse({});    // Stop
+  }
+});
+
+
 $(window).load(function() {
   $('body').prepend(" \
   <div id='metadata_viewer' class='alignleft'> \
@@ -19,7 +46,8 @@ $(window).load(function() {
   </div> \
   ");
 
-  var items = $('[itemscope]').not($('[itemscope] [itemscope]'));
+  items = $('[itemscope]').not($('[itemscope] [itemscope]'));
+
   if (items.length === 0) {
     $('#view_metadata').addClass('no_metadata_reveal');
     $('#view_metadata').text('No Microdata');

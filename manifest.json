@@ -8,7 +8,11 @@
       "48":  "icon48.png",
       "128": "icon128.png" },
   "browser_action": {
-    "default_icon": "icon128.png"
+    "default_icon": "icon128.png",
+    "default_title": "View microdata"
+  },
+  "background": {
+    "page": "background.html"
   },
   "content_scripts": [
     {
@@ -19,7 +23,10 @@
     }
   ],
   "web_accessible_resources": [
-    "lib/messi/messi.min.css"
+    "lib/messi/messi.min.css",
+    "icon_inactive16.png",
+    "icon_inactive48.png",
+    "icon_inactive128.png"
   ],
 "permissions": [
     "tabs", "http://*/*", "https://*/*"

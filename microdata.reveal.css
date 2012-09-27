@@ -67,6 +67,11 @@ table.metadata > tbody > tr.major > td:first-child {
   top:1px;
 }
 
+a#view_metadata.metadata_reveal, a#view_metadata.metadata_reveal:hover{
+  text-decoration:none;
+  color:#306108;
+}
+
 .no_metadata_reveal {
   -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
   -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -100,6 +105,11 @@ table.metadata > tbody > tr.major > td:first-child {
   top:1px;
 }
 
+a#view_metadata.no_metadata_reveal, a#view_metadata.no_metadata_reveal:hover{
+  text-decoration:none;
+  color:#777777;
+}
+
 /* Fix to keep top of messi box in viewport. */
 div.messi{
   top:10px !important;
@@ -120,6 +130,11 @@ div.messi-content{
   font-size:11px;
 }
 
-.metadata_source_view a, .metadata_source_view a:hover {
+.metadata_source_view a {
   text-decoration:none;
+  color:#fff;
+}
+
+.metadata_source_view a:hover {
+  color:#99bbff;
 }
