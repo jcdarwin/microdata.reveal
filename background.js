@@ -1,12 +1,16 @@
 // React when a browser action's icon is clicked.
 var icon_active   = 'icon_active48.png';
 var icon_inactive = 'icon_inactive48.png';
-var $ = jQuery;
+//var $ = jQuery;
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 
-  chrome.extension.sendMessage({property: 'items.length'}, function(response) {
+ alert('Server in action');
+ 
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendMessage(tab.id, {property: 'items.length'}, function(response) {
       alert('server sending');
+    });
   });
 
   var items_length = 0;

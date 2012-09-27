@@ -22,15 +22,14 @@ $.getScript('microdata.reveal/lib/microdatajs/jquery.microdata.json.js');
 
 var items = 0;
 
+chrome.extension.sendMessage(null, {property: 'items.length', items_length: items.length}, function(response) {
+    alert('client sending');
+});
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     alert('client receiving');
   if (request.property == "items.length"){
     alert('client received');
-/*
-    chrome.extension.sendMessage({property: 'items.length', items_length: items.length}, function(response) {
-        alert('client sending');
-    });
-*/
   }
   else{
     sendResponse({});    // Stop
