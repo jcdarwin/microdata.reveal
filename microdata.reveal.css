@@ -1,0 +1,125 @@
+@import url("lib/messi/messi.min.css");
+
+#metadata_viewer{
+  float:left;
+  clear:both;
+  z-index: 10000;
+}
+
+table.metadata {
+  border: 1px solid #000;
+  width:580px;
+  table-layout: fixed;
+  font-size: 12px;
+}
+
+table.metadata > tbody {
+  border: none;
+}
+table.metadata td {
+  color: #000;
+}
+table.metadata > tbody > tr {
+}
+table.metadata > tbody > tr > td:first-child {
+  min-width: 200px;
+  width: 200px;
+}
+table.metadata > tbody > tr > td:first-child {
+  padding-left: 20px;
+}
+table.metadata > tbody > tr.major > td:first-child {
+  font-weight: bold;
+  padding-left: 10px;
+}
+.metadata_reveal {
+  z-index: 10000;
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
+  background:-moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
+  background-color:#77d42a;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  color:#306108;
+  font-family:arial;
+  font-size:11px;
+  font-weight:bold;
+  padding:6px 6px;
+  text-decoration:none;
+  text-shadow:1px 1px 0px #aade7c;
+}
+.metadata_reveal:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
+  background:-moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
+  background-color:#5cb811;
+  color:#777777;
+  text-decoration:none;
+}
+.metadata_reveal:active {
+  position:relative;
+  top:1px;
+}
+
+.no_metadata_reveal {
+  -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+  background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+  background-color:#ededed;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  color:#777777;
+  font-family:arial;
+  font-size:11px;
+  font-weight:bold;
+  padding:6px 6px;
+  text-decoration:none;
+  text-shadow:1px 1px 0px #ffffff;
+}
+.no_metadata_reveal:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+  background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+  background-color:#dfdfdf;
+  text-decoration:none;
+}
+.no_metadata:active {
+  position:relative;
+  top:1px;
+}
+
+/* Fix to keep top of messi box in viewport. */
+div.messi{
+  top:10px !important;
+}
+
+div.messi-box{
+  width:600px !important;
+}
+
+div.messi-content{
+  font-size: 12px;
+}
+
+.metadata_source_view{
+  position:absolute;
+  top:12px;
+  right:35px;
+  font-size:11px;
+}
+
+.metadata_source_view a, .metadata_source_view a:hover {
+  text-decoration:none;
+}
