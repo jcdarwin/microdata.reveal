@@ -13,4 +13,4 @@ The user can also choose to see a JSON representation of the microdata.
 
 The code for this extension is available at [https://github.com/cwa-lml/microdata.reveal](https://github.com/cwa-lml/microdata.reveal)
 
-![Microdata.reveal screenshot](microdata.reveal.screenshot.png "Microdata.reveal screenshot")
+![Microdata.reveal screenshot](raw/master/microdata.reveal.screenshot.png  "Microdata.reveal screenshot")
