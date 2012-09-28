@@ -1,5 +1,3 @@
-@import url("lib/messi/messi.min.css");
-
 #metadata_viewer{
   float:left;
   clear:both;
@@ -124,9 +122,9 @@ div.messi-content{
 }
 
 .metadata_source_view{
-  position:absolute;
-  top:12px;
-  right:35px;
+  float:right;
+  padding-top: 10px;
+  padding-right: 6px;
   font-size:11px;
 }
 
@@ -137,4 +135,10 @@ div.messi-content{
 
 .metadata_source_view a:hover {
   color:#99bbff;
+}
+.messi-closebtn{
+  float:right !important;
+  position:relative !important;
+  right: 0 !important;
+  top:0 !important;
 }
