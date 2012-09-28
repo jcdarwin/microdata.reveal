@@ -1,6 +1,6 @@
 {
   "name": "Microdata.reveal",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 2,
   "description": "Detects and presents the microdata embedded in a given page.",
   "icons": {
@@ -19,7 +19,7 @@
     {
       "matches": ["*://*/*"],
       "css": ["microdata.reveal.css", "lib/messi/messi.min.css"],
-      "js": ["lib/jquery-1.6.4.min.js", "lib/json2.js", "lib/microdatajs/jquery.microdata.js", "lib/microdatajs/jquery.microdata.json.js", "lib/json-template.js", "lib/messi/messi.min.js", "microdata.reveal.js"],
+      "js": ["lib/jquery-1.6.4.min.js", "lib/json2.js", "lib/microdatajs/jquery.microdata.js", "lib/microdatajs/jquery.microdata.json.js", "lib/json-template.js", "lib/messi/messi.min.js", "microdata.reveal.js", "tmpl.microdata.js"],
       "run_at": "document_end"
     }
   ],

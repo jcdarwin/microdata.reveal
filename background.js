@@ -1,24 +1,35 @@
-// Messaging flow:
-// client sends {property: 'status', status: 'ready'} to server
-// server sends {property: 'items.length'} to client
-// client sends {property: 'items.length', value: int} to server
+/*
+** microdata.reveal (background.js)
+**
+** Author: Jason Darwin
+**
+** Date: 27 September 2012
+**
+** A script to allow dectection and presentation to the user of the microdata
+** embedded in a given page.
+**
+** Messaging flow between client (foreground) tab and server (background):
+** * client sends {property: 'status', status: 'ready'} to server
+** * server sends {property: 'items.length'} to client
+** * client sends {property: 'items.length', value: int} to server
+** * server sends {property: 'items.json'} to client
+** * client sends {property: 'items.json', value: string} to server
+*/
 
-// React when a browser action's icon is clicked.
+// React when the browser action's icon is clicked.
 var icon_active   = 'icon48.png';
 var icon_inactive = 'icon_inactive48.png';
 var jsonText;
 var items;
-var s;
 var $ = jQuery;
 
 $(document).ready(function() {
   chrome.tabs.getSelected(null, function(tab) {
-    // Request the microdata items in JSON format from the client tab.
+    // Request the microdata items in JSON format from the client (foreground) tab.
     chrome.tabs.sendMessage(tab.id, {property: 'items.json'}, function(response) {
     });
   });
 });
-
 
 // Trap any link clicks and open them in the current tab.
 $('a').live('click', function(e) {
@@ -61,17 +72,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
     $('#metadata_view').append("<div id='metadata' />");
 
-    load_microdata(items, request.value);
-    $('#metadata').append(s);
+    // Load up the template
+    var expanded = tmpl.microdata.load(items, request.value);
+    $('#metadata').append(expanded);
 
     // Present the results using the Messi popup.
     new Messi($('#metadata'), {title: 'Microdata'});
-    // Ensure our the button on the messi dialogue close the popup.
+
+    // Ensure our the button on the Messi dialogue closes the popup.
     $('.messi-closebtn').click(function(){
       window.close();
     });
+
     $('.messi-titlebox').append('<span class="metadata_source_view"><a id="view_metadata_source_html" style="display:none;" href="#">(HTML)</a><a id="view_metadata_source_json" href="#">(JSON)</a></span>');
 
+    // Click handler for the view JSON link
     $("a#view_metadata_source_json").click(function(){
       $('#metadata_view').append("<div id='metadata' />");
       $('.messi-content').empty().append('<pre><code>' + request.value + '</code></pre>');
@@ -80,9 +95,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
       return false;
     });
 
+    // Click handler for the view HTML link
     $("a#view_metadata_source_html").click(function(){
       $('.messi-content').empty().append($('#metadata'));
-      $('#metadata').append(s);
+      $('#metadata').append(expanded);
       $('.metadata_source_view #view_metadata_source_html').toggle();
       $('.metadata_source_view #view_metadata_source_json').toggle();
       return false;
@@ -93,67 +109,4 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     sendResponse({});    // Stop
   }
 
-  function load_microdata(items, json_text) {
-    if (items.length === 0) {
-      $('#view_metadata').text = "No Microdata";
-      $('#metadata_view').append("<div id='metadata' />");
-      $('#metadata').append('<i>No microdata items found.</i>');
-    } else {
-      items.each( function() {
-        var template = "\
-        {# This is a comment and will be removed from the output.} \
-        {.section items} \
-          {.repeated section @} \
-            <table class='metadata'> \
-              <tbody> \
-                <tr class='major'><td>ITEM {number}</td><td></td></tr> \
-                <tr class='major'> \
-                  <td>type:</td> \
-                  <td><a href='{type}'>{type}</a></td> \
-                </tr> \
-                <tr class='major'> \
-                  <td>property:</td><td></td> \
-                </tr> \
-              {.section properties} \
-                {@|pairs} \
-              {.end} \
-              </tbody> \
-            </table> \
-          {.end} \
-        {.or} \
-          <p><em>No microdata items found.</em></p> \
-        {.end} \
-        ";
-
-        var t = jsontemplate.Template(template, {more_formatters: more_formatters, undefined_str: ""});
-        var item_number = 0;
-
-        function more_formatters(formatter_name) {
-          if (formatter_name === 'pairs') {
-            return rowize_pairs;
-          } else {
-            return null;
-          }
-        }
-
-        function rowize_pairs(value) {
-          var str = '';
-          var tables = [];
-          $.each(value, function(key, val){
-            if (String(val).indexOf('[object Object]') === 0) {
-              tables.push(t.expand({ items: val, number: ++item_number}));
-              str += '<tr><td>' + key + ':</td><td><i>ITEM ' + tables.length + '</i></td></tr>';
-            }
-            else {
-              str += '<tr><td>' + key + ':</td><td>' + val + '</td></tr>';
-            }
-          });
-          str += tables.join('');
-          return str;
-        }
-
-        s = t.expand($.parseJSON(json_text));
-      } );
-    }
-  }
 });

@@ -18,6 +18,7 @@
 **  <script src="microdata.reveal/lib/json-template.js"></script>
 **  <script src="microdata.reveal/lib/messi/messi.min.js"></script>
 **  <link rel="stylesheet" href="microdata.reveal/microdata.reveal.css" />
+**  <script src="microdata.reveal/tmpl.microdata.js"></script>
 **  <script src="microdata.reveal/microdata.reveal.js"></script>
 **
 */
@@ -51,7 +52,6 @@ $(window).load(function() {
 
     // Tell the chrome extension that we're ready to receive messages
     chrome.extension.sendMessage(null, {property: 'status', status: 'ready'}, function(response) {
-//        alert('client sending: ready');
     });
 
   } catch (e) {
@@ -78,7 +78,9 @@ $(window).load(function() {
       // Get all top-level itemscopes (i.e. those without an ancestor itemscope)
       var items = $('[itemscope]').not($('[itemscope] [itemscope]'));
       jsonText = $.microdata.json(items, function(o) { return JSON.stringify(o, undefined, 2); });
-      load_microdata(items);
+
+        // Load up the template
+      tmpl.microdata.load(items, jsonText);
 
       // Present the results using the Messi popup.
       new Messi($('#metadata'), {title: 'Microdata'});
@@ -94,79 +96,15 @@ $(window).load(function() {
 
       $("a#view_metadata_source_html").click(function(){
         $('#metadata_view').append("<div id='metadata' />");
-        load_microdata(items);
+
+        // Load up the template
+        tmpl.microdata.load(items, jsonText);
+
         $('.messi-content').empty().append($('#metadata'));
         $('.metadata_source_view #view_metadata_source_html').toggle();
         $('.metadata_source_view #view_metadata_source_json').toggle();
         return false;
       });
-
     });
-
-    function load_microdata(items) {
-      if (items.length === 0) {
-        $('#view_metadata').text = "No Microdata";
-        $('#metadata_view').append("<div id='metadata' />");
-        $('#metadata').append('<i>No microdata items found.</i>');
-      } else {
-        items.each( function() {
-          var template = "\
-          {# This is a comment and will be removed from the output.} \
-          {.section items} \
-            {.repeated section @} \
-              <table class='metadata'> \
-                <tbody> \
-                  <tr class='major'><td>ITEM {number}</td><td></td></tr> \
-                  <tr class='major'> \
-                    <td>type:</td> \
-                    <td><a href='{type}'>{type}</a></td> \
-                  </tr> \
-                  <tr class='major'> \
-                    <td>property:</td><td></td> \
-                  </tr> \
-                {.section properties} \
-                  {@|pairs} \
-                {.end} \
-                </tbody> \
-              </table> \
-            {.end} \
-          {.or} \
-            <p><em>(No page content matches)</em></p> \
-          {.end} \
-          ";
-
-          var t = jsontemplate.Template(template, {more_formatters: more_formatters, undefined_str: ""});
-          var item_number = 0;
-
-          function more_formatters(formatter_name) {
-            if (formatter_name === 'pairs') {
-              return rowize_pairs;
-            } else {
-              return null;
-            }
-          }
-
-          function rowize_pairs(value) {
-            var str = '';
-            var tables = [];
-            $.each(value, function(key, val){
-              if (String(val).indexOf('[object Object]') === 0) {
-                tables.push(t.expand({ items: val, number: ++item_number}));
-                str += '<tr><td>' + key + ':</td><td><i>ITEM ' + tables.length + '</i></td></tr>';
-              }
-              else {
-                str += '<tr><td>' + key + ':</td><td>' + val + '</td></tr>';
-              }
-            });
-            str += tables.join('');
-            return str;
-          }
-
-          var s = t.expand($.parseJSON(jsonText));
-          $('#metadata').append(s);
-        } );
-      }
-    }
   }
-
 });
