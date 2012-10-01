@@ -15,9 +15,8 @@ table.metadata > tbody {
   border: none;
 }
 table.metadata td {
+  vertical-align: top;
   color: #000;
-}
-table.metadata > tbody > tr {
 }
 table.metadata > tbody > tr > td:first-child {
   min-width: 200px;

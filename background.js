@@ -52,9 +52,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.property == "items.length"){
     var items_length = request.value;
     if (items_length === 0) {
-      chrome.browserAction.setIcon({path: icon_inactive});
+      chrome.tabs.getSelected(null, function(tab) {
+        // If we want a "browser action" (whereby the icon appears in the address bar)
+        // instead of a "page action" (whereby the icon appears in the browser toolstrip)
+        // then switch the comenting of the next two lines.
+        chrome.pageAction.hide(tab.id);
+        // chrome.browserAction.setIcon({path: icon_inactive});
+        });
     } else {
-      chrome.browserAction.setIcon({path: icon_active});
+      chrome.tabs.getSelected(null, function(tab) {
+        // If we want a "browser action" (whereby the icon appears in the address bar)
+        // instead of a "page action" (whereby the icon appears in the browser toolstrip)
+        // then switch the comenting of the next two lines.
+        chrome.pageAction.show(tab.id);
+        // chrome.browserAction.setIcon({path: icon_active});
+        });
     }
     chrome.tabs.getSelected(null, function(tab) {
       // Request the microdata items in JSON format from the client tab.

@@ -7,7 +7,7 @@
       "16":  "icon16.png",
       "48":  "icon48.png",
       "128": "icon128.png" },
-  "browser_action": {
+  "page_action": {
     "default_icon": "icon128.png",
     "default_title": "View microdata",
     "default_popup": "background.html"

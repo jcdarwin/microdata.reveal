@@ -22,7 +22,7 @@ if (!this.tmpl) {
                   <td><a href='{type}'>{type}</a></td> \
                 </tr> \
                 <tr class='major'> \
-                  <td>property:</td><td></td> \
+                  <td>properties:</td><td></td> \
                 </tr> \
               {.section properties} \
                 {@|pairs} \
@@ -55,6 +55,10 @@ if (!this.tmpl) {
             }
 
             function rowize_pairs(value) {
+              String.prototype.trunc =
+                function(n){
+                    return this.substr(0,n-1)+(this.length>n?'&hellip;':'');
+                };
               var str = '';
               var tables = [];
               $.each(value, function(key, val){
@@ -63,6 +67,13 @@ if (!this.tmpl) {
                   str += '<tr><td>' + key + ':</td><td><i>ITEM ' + tables.length + '</i></td></tr>';
                 }
                 else {
+                  if ( String(val).match(/^http(s)?:\/\//) ) {
+                    if ( String(val).match(/\.(jpg|png|gif)$/) ) {
+                      val = '<a href="' + val + '" title="' + val + '"><img src="' + val + '" style="max-width:200px;" /></a>';
+                    } else {
+                      val = '<a href="' + val + '" title="' + val + '">' + String(val).trunc(60) + '</a>';
+                    }
+                  }
                   str += '<tr><td>' + key + ':</td><td>' + val + '</td></tr>';
                 }
               });
