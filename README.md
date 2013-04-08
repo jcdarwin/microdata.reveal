@@ -13,9 +13,9 @@ The user can also choose to see a JSON representation of the microdata.
 
 The code for this extension is available at [https://github.com/cwa-lml/microdata.reveal](https://github.com/cwa-lml/microdata.reveal)
 
-![Microdata.reveal screenshot](microdata.reveal/raw/master/microdata.reveal.screenshot.png  "Microdata.reveal screenshot")
+![Microdata.reveal screenshot](microdata.reveal.screenshot.png  "Microdata.reveal screenshot")
 
-This code can be run in non-chrome browsers by including the following in the <head>:
+This code can be run in non-chrome browsers by including the following in the &lt;head&gt;:
 
         <script src="microdata.reveal/lib/jquery-1.6.4.min.js"></script>
         <script src="microdata.reveal/lib/json2.js"></script>
